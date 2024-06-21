@@ -10,6 +10,18 @@ const index = async () => {
     }
 };
 
+
+const deleteTask = async (taskId) => {
+    try {
+        const deletedTask = await fetch(`${BASE_URL}/${taskId}`, {
+            method: 'DELETE',
+        });
+        return deletedTask.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const create = async (formData) => {
     try {
         const res = await fetch(BASE_URL, {
@@ -25,4 +37,20 @@ const create = async (formData) => {
     }
 }
 
-export { index, create }
+const update = async (formData, taskId) => {
+    try {
+        const res = await fetch(`${BASE_URL}/${taskId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+        return res.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export { index, create, update, deleteTask }
